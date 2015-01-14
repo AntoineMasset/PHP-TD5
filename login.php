@@ -5,13 +5,14 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!empty($_POST['login']) && !empty($_POST['password'])) {
-             $query = $pdo->prepare('SELECT * FROM users WHERE login=:login');
-             $query->bindParam(":login",$_POST['login']);
-             $query->execute();
+            $login = htmlspecialchars($_POST['login']);
+            $query = $pdo->prepare('SELECT * FROM users WHERE login=:login');
+            $query->bindParam(":login", $login);
+            $query->execute();
 
             if ($query->rowCount()) {
                 $user = $query->fetch();
-                if ($user['password'] == $_POST['password']) {
+                if ($user['password'] == htmlspecialchars($_POST['password'])) {
                     $currentUser = $user;
                     $_SESSION['user'] = $currentUser['id'];
 ?>
@@ -27,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
 ?>
 <div class="alert alert-danger">
-    L'utilisateur <?php echo $_POST['login']; ?> n'existe pas.
+    L'utilisateur <?php echo htmlspecialchars($_POST['login']); ?> n'existe pas.
 </div>
 <?php
             }

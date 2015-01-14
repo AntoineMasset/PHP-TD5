@@ -32,7 +32,7 @@ if ($currentUser) {
     } else {
         if ($_SERVER['REQUEST_METHOD']=='POST' && !empty($_POST['answer']) && ($_POST['answer']=='1' || $_POST['answer']=='2' || $_POST['answer']=='3')) {
             $query = $pdo->prepare('INSERT INTO answers (user_id,poll_id,answer) VALUES (?,?,?)');
-            $query->execute(array($currentUser['id'], $poll['id'], $_POST['answer']));
+            $query->execute(array($currentUser['id'], $poll['id'], htmlspecialchars($_POST['answer'])));
 
             $userAnswered = true;
         }
