@@ -5,16 +5,13 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!empty($_POST['login']) && !empty($_POST['password'])) {
-            $login = htmlspecialchars($_POST['login']);
-            $req = $pdo->prepare("SELECT COUNT(*) as nb FROM users WHERE login=:login");
-            $req->bindParam(':login', $login);
-            $req->execute();
-            $res=$req->fetch();
-
+            $query = $pdo->prepare('SELECT COUNT(*) as nb FROM users WHERE login=:login');
+            $query->bindParam(":login", $_POST['login']);
+            $query->execute();
+            $res = $query->fetch();
             if ($res['nb'] == 0) {
-                $password = htmlspecialchars($_POST['password']);
                 $query = $pdo->prepare('INSERT INTO users (login, password) VALUES (?,?)');
-                $query->execute(array($_POST['login'], $password));
+                $query->execute(array($_POST['login'], $_POST['password']));
 ?>
 <div class="alert alert-success">
     Félicitations! Vous êtes désormais inscrits.
@@ -23,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
 ?>
 <div class="alert alert-danger">
-    L'utilisateur <?php echo htmlspecialchars($_POST['login']); ?> existe déjà.
+    L'utilisateur <?php echo $_POST['login']; ?> existe déjà.
 </div>
 <?php
             }

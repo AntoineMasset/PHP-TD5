@@ -6,19 +6,9 @@
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['question']) && !empty($_POST['answer1']) && !empty($_POST['answer2']) && isset($_POST['answer3'])) {
-        $question = htmlspecialchars($_POST['question']);
-        $answer1 = htmlspecialchars($_POST['answer1']);
-        $answer2 = htmlspecialchars($_POST['answer2']);
-        $answer3 = htmlspecialchars($_POST['answer3']);
-
-        $req = $pdo->prepare("INSERT INTO polls (question,answer1,answer2,answer3) VALUES (:question, :answer1, :answer2, :answer3)");
-        $req->bindParam(':question', $question);
-        $req->bindParam(':answer1', $answer1);
-        $req->bindParam(':answer2', $answer2);
-        $req->bindParam(':answer3', $answer3);
-        $req->execute();
+            $query = $pdo->prepare('INSERT INTO polls (question,answer1,answer2,answer3) VALUES (?,?,?,?)');
+            $query->execute(array($_POST['question'], $_POST['answer1'], $_POST['answer2'], $_POST['answer3']));
 ?>
-
 <div class="alert alert-success">
     Sondage ajouté.
 </div>

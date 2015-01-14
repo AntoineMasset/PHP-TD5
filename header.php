@@ -4,14 +4,15 @@ include('bdd/pdo.php');
 $logged = isset($_SESSION['user']);
 $currentUser = false;
 if ($logged) {
-    $req = $pdo->prepare("SELECT * FROM users WHERE id=:user");
-    $req->bindParam(':user', $_SESSION['user']);
-    $req->execute();
-    if ($req->rowCount()) {
-        $currentUser = $req->fetch(); 
-    } else {
+    $req = $pdo->prepare('SELECT * FROM users WHERE id=?');
+    $req->execute(array($_SESSION['user']));
+
+    if ($req->rowCount()) {                                                                                                                                                            
+        $currentUser = $req->fetch();
+    } 
+    else {
         unset($_SESSION['user']);
-    }
+    }                                                                                                                                                                                                                   
 }
 ?>
 <html>

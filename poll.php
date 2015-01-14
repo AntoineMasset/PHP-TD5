@@ -3,12 +3,12 @@
 <?php
 $poll = false;
 if (isset($_GET['id'])) {
-    $query = $pdo->prepare("SELECT * FROM polls WHERE id=:id");
-    $query->bindParam(':id', $_GET['id']);
+    $query = $pdo->prepare('SELECT * FROM polls WHERE id=:id');
+    $query->bindParam(":id", $_GET['id']);
     $query->execute();
     if ($query->rowCount()) {
         $poll = $query->fetch();
-    }
+    }        
 }
 
 if (!$poll) {
@@ -25,34 +25,28 @@ $userAnswered = false;
 $answers = null;
 
 if ($currentUser) {
-    $query = $pdo->prepare("SELECT * FROM answers WHERE poll_id=:pollId AND user_id=:userId");
-    $query->bindParam(':pollId', $poll['id']);
-    $query->bindParam(':userId', $currentUser['id']);
-    $query->execute();
+    $query = $pdo->prepare('SELECT * FROM answers WHERE poll_id=:pollId AND user_id=:userId');
+    $query->execute(array('pollId'=>$poll['id'],'userId'=>$currentUser['id'] ));
     if ($query->rowCount()) {
         $userAnswered = true;
     } else {
         if ($_SERVER['REQUEST_METHOD']=='POST' && !empty($_POST['answer']) && ($_POST['answer']=='1' || $_POST['answer']=='2' || $_POST['answer']=='3')) {
-            $sql='INSERT INTO answers (user_id,poll_id,answer) VALUES (?,?,?)';
-            $query = $pdo->prepare($sql);
-            $query->execute(array($currentUser['id'], $poll['id'], htmlspecialchars($_POST['answer'])));
+            $query = $pdo->prepare('INSERT INTO answers (user_id,poll_id,answer) VALUES (?,?,?)');
+            $query->execute(array($currentUser['id'], $poll['id'], $_POST['answer']));
 
-                $userAnswered = true;
-            }
+            $userAnswered = true;
+        }
     }
 
     if ($userAnswered) {
         $answers = array();
         foreach (array(1,2,3) as $answer) {
-            $query = $pdo->prepare("SELECT COUNT(*) as nb FROM answers WHERE poll_id=:pollId AND answer=:answer");
-            $query->bindParam(':pollId', $poll['id']);
-            $query->bindParam(':answer', $answer);
-            $query->execute();
+            $sql='SELECT COUNT(*) as nb FROM answers WHERE poll_id=:pollId AND answer=:answer';
+            $query = $pdo->prepare($sql);
+            $query->execute(array('pollId'=>$poll['id'],'answer'=>$answer));
+            $res=$query->fetch();
 
-            $res = $query->fetch();
             $answers[$answer] = $res['nb'];
-
-
         }
         $total = array_sum($answers);
     }
