@@ -11,8 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $query->execute();
 
             if ($query->rowCount()) {
+                $password = htmlspecialchars($_POST['password']);
                 $user = $query->fetch();
-                if ($user['password'] == htmlspecialchars($_POST['password'])) {
+                if ($user['password'] == md5($password)) {
                     $currentUser = $user;
                     $_SESSION['user'] = $currentUser['id'];
 ?>

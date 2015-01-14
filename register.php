@@ -12,8 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $res = $query->fetch();
 
             if ($res['nb'] == 0) {
+                $login = htmlspecialchars($_POST['login']);
+                $password = htmlspecialchars($_POST['password']);
                 $query = $pdo->prepare('INSERT INTO users (login, password) VALUES (?,?)');
-                $query->execute(array(htmlspecialchars($_POST['login']), htmlspecialchars($_POST['password'])));
+                $query->execute(array($login, md5($password)));
 ?>
 <div class="alert alert-success">
     Félicitations! Vous êtes désormais inscrits.
