@@ -16,15 +16,35 @@
     <nav class="navbar navbar-default">
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="{{ url('index') }}">Accueil</a></li>
+            {% if app.request.requestUri == path('index') %}
+                <li class="active"><a href="{{ url('index') }}">Accueil</a></li>
+            {% else %}
+                <li><a href="{{ url('index') }}">Accueil</a></li>
+            {% endif %}
             {% if session %}
                 <li><a href="{{ url('deconnexion') }}">Deconnexion</a></li>
-                <li><a href="{{ url('nouveauSondage') }}">Nouveau sondage</a></li>
+                {% if app.request.requestUri == path('nouveauSondage') %}
+                    <li class="active"><a href="{{ url('nouveauSondage') }}">Nouveau sondage</a></li>
+                {% else %}
+                    <li><a href="{{ url('nouveauSondage') }}">Nouveau sondage</a></li>
+                {% endif %}
             {% else %}
-                <li><a href="{{ url('identification') }}">Identification</a></li>
-                <li><a href="{{ url('inscription') }}">Inscription</a></li> 
+                {% if app.request.requestUri == path('identification') %}
+                    <li class="active"><a href="{{ url('identification') }}">Identification</a></li>
+                {% else %}
+                    <li><a href="{{ url('identification') }}">Identification</a></li>
+                {% endif %}
+                {% if app.request.requestUri == path('inscription') %}
+                    <li class="active"><a href="{{ url('inscription') }}">Inscription</a></li>
+                {% else %}
+                    <li><a href="{{ url('inscription') }}">Inscription</a></li>
+                {% endif %}
             {% endif %}
-            <li><a href="{{ url('sondages') }}">Sondages</a></li>
+            {% if app.request.requestUri == path('sondages') %}
+                <li class="active"><a href="{{ url('sondages') }}">Sondages</a></li>
+            {% else %}
+                <li><a href="{{ url('sondages') }}">Sondages</a></li>
+            {% endif %}
           </ul>
         </div>
     </nav>
