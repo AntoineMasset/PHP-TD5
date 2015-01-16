@@ -1,0 +1,102 @@
+/* Layout */
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: 'Roboto', sans-serif;
+  padding-bottom: 0px;
+  background-color: #E6E6E6;
+}
+
+@media (min-width: 40rem) {
+  html { font-size: 112%; }
+}
+
+@media (min-width: 64rem) {
+  html { font-size: 120%; }
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 53rem;
+  width: 90%;
+}
+
+/* Header */
+
+.mobile {
+  margin: 0 auto;
+  max-width: 150px;
+}
+
+@media (min-width: 40rem) {
+  .mobile { max-width: 250px; }
+}
+
+/* Mobile  */
+
+.column { margin-bottom: 1.5rem; }
+
+@media (min-width: 40rem) {
+  .column {
+    float: left;
+    margin: 0;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+  }
+
+  .column.full { width: 100%; }
+  .column.two-thirds { width: 66.7%; }
+  .column.half { width: 50%; }
+  .column.third { width: 33.3%; }
+  .column.fourth { width: 25%; }
+  .column.flow-opposite { float: right; }
+}
+
+/* Typography */
+
+h1, h2, h3, h4, h5 {
+  font-weight: normal;
+  margin: 0;
+}
+
+h1 {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 40rem) {
+  h1 { font-size: 1.5rem; }
+}
+
+/* Listes */
+
+ul {
+  margin: 0;
+  text-align: left;
+}
+
+@media (min-width: 40rem) {
+  ul { display: inline-block; }
+}
+
+/* Liens */
+
+a {
+  text-decoration: none;
+}
+
+a:hover { text-decoration: none; }
+
+/* Elements */
+
+img {
+  display: block;
+  height: auto;
+  margin: 0 auto 1.5rem auto;
+  width: 100%;
+}

@@ -1,0 +1,17 @@
+{% extends 'header.html.twig' %}
+{% block content %}
+
+	<h2>Sondages</h2>
+
+	<ul class="list-group">
+		{% for sondage in sondages %}
+			<li class="list-group-item">
+			    <strong> {{ sondage.question }} </strong>
+			    <a class="btn btn-xs btn-success pull-right" href="{{ path('sondage',{'numero':sondage.id}) }}"> 
+			    	Voir &raquo;
+			    </a>
+			</li>
+		{% endfor %}
+	</ul>
+
+{% endblock %}

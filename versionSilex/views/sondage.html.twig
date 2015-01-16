@@ -1,0 +1,43 @@
+{% extends 'header.html.twig' %}
+{% block content %}
+
+    <h2>Sondage</h2>
+
+    <div class="alert alert-danger">
+        Sondage non trouvé.
+    </div>
+
+    {% for reponse in reponses %}
+        <h2> {{ reponse.question }} </h2>
+        <h3>
+            <label>
+                <input type="radio" name="answer" value="" />
+                {{ reponse.answer1 }}
+            </label>
+        </h3>        
+        <h3>
+            <label>
+                <input type="radio" name="answer" value="" />
+                {{ reponse.answer2 }}
+            </label>
+        </h3>        
+        <h3>
+            <label>
+                <input type="radio" name="answer" value="" />
+                {{ reponse.answer3 }}
+            </label>
+        </h3>
+    {% endfor %}
+
+    {% if userAnswered %}
+        <form method="post" action="{{ path('ajoutReponse') }}">
+
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $pct; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $pct; ?>%;">
+                </div>
+            </div>
+                <input class="btn btn-success pull-right" type="submit" value="Participer!" />
+        </form>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <title>Social Sondage</title>
+        <link rel="stylesheet" href="dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="style/style.css" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    </head>
+    <body>
+        
+    <h1>
+        <img src="imgs/poll.png" />
+        Social <span class="sondage">Sondage</span>
+    </h1>
+    <nav class="navbar navbar-default">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="{{ url('index') }}">Accueil</a></li>
+            {% if session %}
+                <li><a href="{{ url('deconnexion') }}">Deconnexion</a></li>
+                <li><a href="{{ url('nouveauSondage') }}">Nouveau sondage</a></li>
+            {% else %}
+                <li><a href="{{ url('identification') }}">Identification</a></li>
+                <li><a href="{{ url('inscription') }}">Inscription</a></li> 
+            {% endif %}
+            <li><a href="{{ url('sondages') }}">Sondages</a></li>
+          </ul>
+        </div>
+    </nav>
+
+{% block content %}{% endblock %}
