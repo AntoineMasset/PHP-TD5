@@ -90,12 +90,14 @@ $app->post('/creationSondage', function() use ($app) {
     $answer1 = htmlspecialchars($_POST['answer1']);
     $answer2 = htmlspecialchars($_POST['answer2']);;
     $answer3 = htmlspecialchars($_POST['answer3']);
+    $user = $app['session']->get('user');
+    $idCreateur = $user['idUser'];
     $msgErreurChamps = true;
     $msgSuccess = null;
 
     if (!empty($question) && !empty($answer1) && !empty($answer2) && isset($answer3)) {
         $msgErreurChamps = null;
-        $app['model']->addSondage($question, $answer1, $answer2, $answer3);
+        $app['model']->addSondage($question, $answer1, $answer2, $answer3, $idCreateur);
         $msgSuccess = true;
     }
 

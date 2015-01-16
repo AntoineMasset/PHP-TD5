@@ -44,7 +44,7 @@ class Model {
         $query = $this->pdo->prepare($sql);
         $query->bindParam(":login",$login);
         $query->execute();
-        return $query->execute();
+        $res = $query->execute();
 
     }
 
@@ -71,14 +71,15 @@ class Model {
         return $query->execute();
     }
 
-    public function addSondage($question, $answer1, $answer2, $answer3)
+    public function addSondage($question, $answer1, $answer2, $answer3, $idCreateur)
     {
-        $sql = "INSERT INTO polls (question,answer1,answer2,answer3) VALUES (:question, :answer1, :answer2, :answer3)";
+        $sql = "INSERT INTO polls (question,answer1,answer2,answer3,idCreateur) VALUES (:question, :answer1, :answer2, :answer3, :idCreateur)";
         $query = $this->pdo->prepare($sql);
         $query->bindParam(":question",$question);
         $query->bindParam(":answer1", $answer1);
         $query->bindParam(":answer2", $answer2);
         $query->bindParam(":answer3", $answer3);
+        $query->bindParam(":idCreateur", $idCreateur);
         return $query->execute();
     }
 
